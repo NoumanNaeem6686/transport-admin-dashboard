@@ -28,7 +28,7 @@ export const routes = [
     title: "Team Members",
     icon: Users,
     href: "/dashboard/accounts",
-    // admin: true,
+    admin: true,
   },
   {
     title: "Daily Tasks",
@@ -42,18 +42,13 @@ export const routes = [
     href: "/dashboard/my-task",
     admin: false,
   },
-  {
-    title: "Schedule History",
-    icon: History,
-    href: "/dashboard/my-history",
-    // admin: false,
-  },
 
-  {
-    title: "Settings",
-    icon: Settings,
-    href: "/dashboard/setting",
-  },
+
+  // {
+  //   title: "Settings",
+  //   icon: Settings,
+  //   href: "/dashboard/setting",
+  // },
 
 
 ];

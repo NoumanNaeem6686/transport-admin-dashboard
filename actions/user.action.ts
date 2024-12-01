@@ -4,17 +4,7 @@ import { cookies } from "next/headers";
 import axiosInstance from "@/config/axios";
 import { IUser, Result } from "@/helpers/types";
 
-export async function signOutUser(): Promise<Result<{ message: string }>> {
-  try {
-    await axiosInstance.post("/api/users/sign-out");
-    return { data: { message: "Logged out successfully" } };
-  } catch (error: any) {
-    // Extract detailed error message if available
-    const errorMessage = error.response?.data?.error || "Sign out failed";
-    // console.error("Sign out failed:", errorMessage);
-    return { error: errorMessage };
-  }
-}
+
 
 export async function deleteUser(
   userId: string
@@ -76,30 +66,8 @@ export async function editUser(
     return { error: errorMessage };
   }
 }
-export async function checkInUser() {
-  try {
-    const response = await axiosInstance.post(`/api/users/check-in`);
-    console.log("🚀 ~ checkInUser ~ response:", response.data);
-    return { data: response.data };
-  } catch (error: any) {
-    console.log(error.response.data)
-    const errorMessage = error.response?.data || "Failed to check in";
-    console.error("Check in failed:", errorMessage);
-    return { error: errorMessage };
-  }
-}
 
-export async function checkOutUser() {
-  try {
-    const response = await axiosInstance.post(`/api/users/check-out`);
-    console.log("🚀 ~ checkOutUser ~ response:", response.data);
-    return { data: response.data };
-  } catch (error: any) {
-    const errorMessage = error.response?.data || "Failed to check out";
-    console.error("Check out failed:", errorMessage);
-    return { error: errorMessage };
-  }
-}
+
 export async function createUser(data: IUser): Promise<Result<IUser>> {
   try {
     const response = await axiosInstance.post("/api/users", {
@@ -116,33 +84,7 @@ export async function createUser(data: IUser): Promise<Result<IUser>> {
     return { error: errorMessage };
   }
 }
-export async function inviteUser(data: any) {
-  try {
-    const response = await axiosInstance.post("/api/users/invite", {
-      email: data
-    });
 
-    return { data: response.data.body };
-  } catch (error: any) {
-    console.log("🚀 ~ inviteUser ~ error:", error)
-    const errorMessage = error.response?.data?.error || "Invite Member failed";
-    // console.error("Create user failed:", errorMessage);
-    return { error: errorMessage };
-  }
-}
-export async function AuthUser(data: any) {
-  try {
-    const response = await axiosInstance.post("/api/users/authenticate", {
-      id: data
-    });
-
-    return { data: response.data.success };
-  } catch (error: any) {
-    console.log("🚀 ~ AuthUser ~ error:", error)
-    const errorMessage = error.response?.data?.error || "authentication Member failed";
-    return { error: errorMessage };
-  }
-}
 
 export async function getAllUsers({
   query,
@@ -166,28 +108,3 @@ export async function getAllUsers({
     return { error: errorMessage };
   }
 }
-export async function getUserHistory({
-  page,
-  limit,
-}: {
-  page?: number;
-  limit?: number;
-}): Promise<Result<{ timestamps: any }>> {
-  try {
-    const response = await axiosInstance.get("/api/me/history", {
-      params: { page, limit },
-    });
-
-    console.log(response.data.body)
-    // Return data and metadata
-    return { data: response.data.body, meta: response.data.meta };
-  } catch (error: any) {
-    console.log("🚀 ~ error:", error)
-    // Check for a detailed error message or default to a generic message
-    const errorMessage =
-      error.response?.data?.error || "Fetch user history failed";
-
-    return { error: errorMessage };
-  }
-}
-
