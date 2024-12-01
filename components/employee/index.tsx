@@ -30,9 +30,9 @@ export const Accounts = ({ data, meta }: { data: IUser[]; meta: IMeta; }) => {
         return result;
       }),
       {
-        loading: "Creating admin...",
-        success: "Admin created successfully!",
-        error: "Error creating admin.",
+        loading: "Creating user...",
+        success: "User created successfully!",
+        error: "Error creating user.",
       }
     );
   };

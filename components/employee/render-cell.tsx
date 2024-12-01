@@ -28,9 +28,9 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
         return result; // Return the result if no error
       }),
       {
-        loading: "Editing admin...",
-        success: "Admin edited successfully!",
-        error: "Error editing admin.",
+        loading: "Editing user...",
+        success: "User edited successfully!",
+        error: "Error editing user.",
       }
     );
   };
@@ -44,9 +44,9 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
         return result; // Return the result if no error
       }),
       {
-        loading: "Deleting admin...",
-        success: "Admin deleted successfully!",
-        error: "Error deleting admin.",
+        loading: "Deleting user...",
+        success: "User deleted successfully!",
+        error: "Error deleting user.",
       }
     );
   };

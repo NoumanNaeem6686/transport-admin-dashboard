@@ -36,14 +36,14 @@ const UserModal = ({
     email: "",
     _id: "",
     full_name: "",
-    type: "admin",
+    type: "employee",
     password: "",
     signature: "",
     ...data,
   });
 
   // Customize modal title and button text based on the mode
-  const title = `${mode} Admin`;
+  const title = `${mode} Member`;
   const isViewMode = mode === "View";
   const isDeleteMode = mode === "Delete";
   const isInviteMode = mode === "Invite";
@@ -87,7 +87,7 @@ const UserModal = ({
           email: "",
           _id: "",
           full_name: "",
-          type: "admin",
+          type: "employee",
           password: "",
           signature: "",
         });
@@ -105,7 +105,7 @@ const UserModal = ({
           {
             mode == "Add" ? <Plus className="h-5 w-5" /> : <Send className="h-5 w-5" />
           }
-          {mode} Admin
+          {mode} Member
         </Button>
       )}
       <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
@@ -150,7 +150,25 @@ const UserModal = ({
                       variant="bordered"
                       disabled={isViewMode}
                     />
-
+                    {/* <Input
+                      name="signature"
+                      label="Signature"
+                      value={editedUser.signature}
+                      onChange={handleChange}
+                      variant="bordered"
+                      disabled={isViewMode}
+                    /> */}
+                    <Select
+                      name="type"
+                      label="Type"
+                      selectedKeys={[editedUser.type]}
+                      onChange={(e) => handleChange(e)}
+                      variant="bordered"
+                      disabled={isViewMode}
+                    >
+                      <SelectItem key="admin">Admin</SelectItem>
+                      <SelectItem key="employee">Employee</SelectItem>
+                    </Select>
 
                     {!isViewMode && (
                       <Input

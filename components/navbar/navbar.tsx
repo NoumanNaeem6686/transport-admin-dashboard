@@ -21,7 +21,6 @@ interface Props {
 
 
 export const NavbarWrapper = ({ children }: Props) => {
-  const { isAdmin, userData } = useCheckAdmin()
 
 
   return (
@@ -35,14 +34,7 @@ export const NavbarWrapper = ({ children }: Props) => {
         <NavbarContent className="md:hidden">
           <BurguerButton />
         </NavbarContent>
-        {/* <ul className="sm:flex gap-x-6 hidden hover:text-black  transition-all text-gray-600 dark:text-gray-300 cursor-pointer items-center gap-5">
 
-          {
-            navLinks.map((item: any, index: number) => (
-              <li className="hover:scale-x-110 transition-all light-font " key={index}>{item.name}</li>
-            ))
-          }
-        </ul> */}
 
         <NavbarContent
 
@@ -50,16 +42,13 @@ export const NavbarWrapper = ({ children }: Props) => {
           className="w-fit ml-auto data-[justify=end]:flex-grow-0"
         >
           <NotificationsDropdown />
-          {/* <DarkModeSwitch /> */}
 
           <NavbarContent>
             <UserDropdown />
           </NavbarContent>
         </NavbarContent>
       </Navbar>
-      <div className="pt-10">
-        {children}
-      </div>
+      {children}
     </div>
   );
 };
