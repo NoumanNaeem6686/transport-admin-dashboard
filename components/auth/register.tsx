@@ -21,11 +21,7 @@ function Register({ data, id }: any) {
         password: "",
         // signature: ""
     };
-    useEffect(() => {
-        if (data == true) {
-            setShowLoading(false)
-        }
-    }, [data])
+
     const handleRegister = async (values: any) => {
         setLoading(true);
         const fullName = `${values.first_name} ${values.middle_name} ${values.last_name}`;
@@ -56,12 +52,12 @@ function Register({ data, id }: any) {
         "Monitor activity",
     ];
 
-    if (showLoading) {
-        return (
-            <MainLoader />
+    // if (showLoading) {
+    //     return (
+    //         <MainLoader />
 
-        )
-    }
+    //     )
+    // }
     return (
         <section className="bg-white dark:bg-black flex items-center justify-center">
             {/* <section className="bg-white h-screen max-h-screen lg:overflow-y-hidden"> */}

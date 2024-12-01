@@ -11,11 +11,11 @@ const CompanyCard = () => {
       <div className="cursor-pointer">
         <div className="flex items-center gap-2">
           <Image
-            src={"/logo.jpeg"}
+            src={"/t.png"}
             alt="Company Logo"
             width={100}
             height={100}
-            className="h-auto w-10"
+            className="h-auto w-36"
           />
 
 

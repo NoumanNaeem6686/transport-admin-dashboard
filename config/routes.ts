@@ -25,7 +25,7 @@ export const routes = [
     href: "/dashboard",
   },
   {
-    title: "Team Members",
+    title: "Employees",
     icon: Users,
     href: "/dashboard/accounts",
     admin: true,

@@ -41,20 +41,18 @@ function Auth({ searchParams }: { searchParams: { error?: string } }) {
 
   return (
     <section className="bg-white h-screen max-h-screen lg:overflow-y-hidden dark:bg-black flex items-center justify-center">
-      <div className="grid grid-cols-1  lg:w-1/2 w-full">
-        {/* Image Section */}
-        {/* <div className="relative lg:h-screen flex items-end px-4 pb-10 pt-60 sm:pb-16 md:justify-center lg:pb-24 bg-gray-50 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1  lg:grid-cols-2 w-full">
+        <div className="relative lg:h-screen flex items-end px-4 pb-10 pt-60 sm:pb-16 md:justify-center lg:pb-24 bg-gray-50 sm:px-6 lg:px-8">
           <div className="absolute inset-0">
-            <img className="object-cover w-full h-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/signup/4/girl-working-on-laptop.jpg" alt="" />
+            <img className="object-cover w-full h-full" src="/pexels-artempodrez-5025512.jpg" alt="" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
           <div className="relative">
             <div className="w-full max-w-xl xl:w-full xl:mx-auto xl:pr-24 xl:max-w-xl">
               <h3 className="text-4xl font-bold bold-font  text-white">
-                Welcome Back! <br className="hidden xl:block" />
                 We&lsquo;re excited to have you here.
               </h3>
-              <ul className="grid grid-cols-1 mt-10 sm:grid-cols-2 gap-x-8 gap-y-4">
+              {/* <ul className="grid grid-cols-1 mt-10 sm:grid-cols-2 gap-x-8 gap-y-4">
                 {projectHighlights.map((highlight, index) => (
                   <li key={index} className="flex items-center space-x-3">
                     <div className="inline-flex items-center justify-center flex-shrink-0 w-5 h-5 bg-[#05549F] rounded-full">
@@ -67,10 +65,10 @@ function Auth({ searchParams }: { searchParams: { error?: string } }) {
                 ))}
 
 
-              </ul>
+              </ul> */}
             </div>
           </div>
-        </div> */}
+        </div>
 
         <div className="flex items-center justify-center px-4 py-10 bg-white dark:bg-black sm:px-6 lg:px-8 sm:py-16 lg:py-24">
           <div className="w-full xl:w-10/12 2xl:max-w-md xl:mx-auto">

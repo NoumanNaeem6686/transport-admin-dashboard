@@ -17,20 +17,20 @@ export function Providers({ children, themeProps, session }: ProvidersProps) {
   return (
     <SessionProvider session={session}>
       <NextUIProvider>
-        <NextThemesProvider
+        {/* <NextThemesProvider
           defaultTheme="light"
           attribute="class"
           {...themeProps}
-        >
-          <NextTopLoader
-            color="#05549F"
-            height={5}
-            zIndex={1000000}
-            showSpinner={false}
-          />
-          <Toaster />
-          {children}
-        </NextThemesProvider>
+        > */}
+        <NextTopLoader
+          color="#05549F"
+          height={5}
+          zIndex={1000000}
+          showSpinner={false}
+        />
+        <Toaster />
+        {children}
+        {/* </NextThemesProvider> */}
       </NextUIProvider>
     </SessionProvider>
   );

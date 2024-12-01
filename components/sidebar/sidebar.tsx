@@ -43,12 +43,11 @@ export const SidebarWrapper = () => {
               <div className={Sidebar.Header()}>
                 <CompanyCard />
 
-                <div className="absolute right-1 top-1 hidden  cursor-pointer bg-white dark:bg-black  rounded-lg border p-0.5 md:flex items-center justify-center"
+                {/* <div className="absolute right-1 top-1 hidden  cursor-pointer bg-white dark:bg-black  rounded-lg border p-0.5 md:flex items-center justify-center"
                   onClick={() => setIsShowIcon(!isShowIcon)}
                 >
-                  {/* <ChevronRight /> */}
-                  <ChevronLeft />
-                </div>
+                <ChevronLeft />
+              </div> */}
               </div>
               <div className="flex flex-col justify-between h-full">
                 <div className={Sidebar.Body()} >
@@ -103,7 +102,7 @@ export const SidebarWrapper = () => {
                 </div>
               </div>
             </div>
-          </aside>
+          </aside >
 
           :
           <aside className="h-screen z-[200] sticky top-0 w-20 bg-white dark:bg-black border-r  dark:border-r-gray-800">
