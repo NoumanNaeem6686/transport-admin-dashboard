@@ -5,10 +5,10 @@ import { EditIcon } from "../icons/table/edit-icon";
 import { EyeIcon } from "../icons/table/eye-icon";
 import { IUser } from "@/helpers/types";
 import Link from "next/link";
-import UserModal from "./user-modal";
 import { deleteUser, editUser } from "@/actions/user.action";
 import { toast } from "sonner";
 import { History } from "lucide-react";
+import EmployeeModel from "./user-modal";
 
 interface Props {
   item: any;
@@ -28,9 +28,9 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
         return result; // Return the result if no error
       }),
       {
-        loading: "Editing user...",
-        success: "User edited successfully!",
-        error: "Error editing user.",
+        loading: "Editing employee...",
+        success: "Employee edited successfully!",
+        error: "Error editing employee.",
       }
     );
   };
@@ -44,9 +44,9 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
         return result; // Return the result if no error
       }),
       {
-        loading: "Deleting user...",
-        success: "User deleted successfully!",
-        error: "Error deleting user.",
+        loading: "Deleting employee...",
+        success: "Employee deleted successfully!",
+        error: "Error deleting employee.",
       }
     );
   };
@@ -56,6 +56,8 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
 
     case "full_name":
       return <div className="capitalize">{cellValue}</div>;
+    case "hourRate":
+      return <div className="capitalize">{cellValue}$</div>;
     case "createdAt":
       return <div className="">  {new Date(cellValue).toLocaleDateString("en-GB", {
         day: "2-digit",
@@ -69,14 +71,30 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
           size="sm"
           variant="flat"
           color={
-            cellValue === "admin"
+            cellValue === "driver"
+              ? "success"
+              : cellValue === "helper"
+                ? "primary"
+                : "warning"
+          }
+        >
+          <span className="text-xs">{cellValue}</span>
+        </Chip>
+      );
+    case "isAvailable":
+      return (
+        <Chip
+          size="sm"
+          variant="flat"
+          color={
+            cellValue === "true"
               ? "success"
               : cellValue === "user"
                 ? "primary"
                 : "warning"
           }
         >
-          <span className="text-xs">{cellValue}</span>
+          <span className="text-xs">{cellValue == "true" ? "Available" : "Busy"}</span>
         </Chip>
       );
 
@@ -86,7 +104,7 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
 
           <div>
             <Tooltip content="Details">
-              <UserModal
+              <EmployeeModel
                 button={<EyeIcon size={20} fill="#979797" />}
                 mode="View"
                 data={item}
@@ -97,7 +115,7 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
           <>
             <div>
               <Tooltip content="Edit user" color="secondary">
-                <UserModal
+                <EmployeeModel
                   button={<EditIcon size={20} fill="#1a740e" />}
                   mode="Edit"
                   data={item}
@@ -107,7 +125,7 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
             </div>
             <div>
               <Tooltip content="Delete user" color="danger">
-                <UserModal
+                <EmployeeModel
                   button={<DeleteIcon size={20} fill="#FF0080" />}
                   mode="Delete"
                   data={item}

@@ -22,7 +22,7 @@ type UserModalProps = {
   onConfirm?: (mode: string, data: any) => Promise<void>; // Updated to async
 };
 
-const UserModal = ({
+const EmployeeModel = ({
   mode = "Add",
   data,
   onConfirm,
@@ -32,18 +32,20 @@ const UserModal = ({
   const [InviteEmail, setInviteEmail] = useState("")
   const router = useRouter()
   // State to manage the user data
-  const [editedUser, setEditedUser] = useState<IUser & { encryptedPassword?: string }>({
+  const [editedUser, setEditedUser] = useState<any>({
     email: "",
     _id: "",
     full_name: "",
-    type: "employee",
+    phone_number: "",
+    hourRate: "",
+    isAvailable: "false",
+    type: "helper",
     password: "",
-    signature: "",
     ...data,
   });
 
   // Customize modal title and button text based on the mode
-  const title = `${mode} Member`;
+  const title = `${mode} Employee`;
   const isViewMode = mode === "View";
   const isDeleteMode = mode === "Delete";
   const isInviteMode = mode === "Invite";
@@ -67,7 +69,7 @@ const UserModal = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setEditedUser((prevState) => ({
+    setEditedUser((prevState: any) => ({
       ...prevState,
       [name]: value,
     }));
@@ -87,9 +89,11 @@ const UserModal = ({
           email: "",
           _id: "",
           full_name: "",
-          type: "employee",
+          phone_number: "",
+          isAvailable: "false",
+          hourRate: "",
+          type: "helper",
           password: "",
-          signature: "",
         });
       }
       router.refresh()
@@ -105,11 +109,11 @@ const UserModal = ({
           {
             mode == "Add" ? <Plus className="h-5 w-5" /> : <Send className="h-5 w-5" />
           }
-          {mode} Member
+          {mode} Employee
         </Button>
       )}
       <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
-        <ModalContent>
+        <ModalContent className="max-h-[95vh] overflow-y-auto">
           <ModalHeader>{title}</ModalHeader>
           <ModalBody>
             {isDeleteMode ? (
@@ -135,14 +139,6 @@ const UserModal = ({
                 (
                   <>
                     <Input
-                      name="email"
-                      label="Email"
-                      value={editedUser.email}
-                      onChange={handleChange}
-                      variant="bordered"
-                      disabled={isViewMode}
-                    />
-                    <Input
                       name="full_name"
                       label="Full Name"
                       value={editedUser.full_name}
@@ -150,14 +146,31 @@ const UserModal = ({
                       variant="bordered"
                       disabled={isViewMode}
                     />
-                    {/* <Input
-                      name="signature"
-                      label="Signature"
-                      value={editedUser.signature}
+                    <Input
+                      name="email"
+                      label="Email"
+                      value={editedUser.email}
                       onChange={handleChange}
                       variant="bordered"
                       disabled={isViewMode}
-                    /> */}
+                    />
+
+                    <Input
+                      name="phone_number"
+                      label="Phone Number"
+                      value={editedUser.phone_number}
+                      onChange={handleChange}
+                      variant="bordered"
+                      disabled={isViewMode}
+                    />
+                    <Input
+                      name="hourRate"
+                      label="Hourly Rate ($)"
+                      value={editedUser.hourRate}
+                      onChange={handleChange}
+                      variant="bordered"
+                      disabled={isViewMode}
+                    />
                     <Select
                       name="type"
                       label="Type"
@@ -166,8 +179,20 @@ const UserModal = ({
                       variant="bordered"
                       disabled={isViewMode}
                     >
-                      <SelectItem key="admin">Admin</SelectItem>
-                      <SelectItem key="employee">Employee</SelectItem>
+                      <SelectItem key="helper">Helper</SelectItem>
+                      <SelectItem key="cleaner">Cleaner</SelectItem>
+                      <SelectItem key="driver">Driver</SelectItem>
+                    </Select>
+                    <Select
+                      name="isAvailable"
+                      label="Availability"
+                      selectedKeys={[editedUser.isAvailable]}
+                      onChange={(e) => handleChange(e)}
+                      variant="bordered"
+                      disabled={isViewMode}
+                    >
+                      <SelectItem key="true">Available</SelectItem>
+                      <SelectItem key="false">Busy</SelectItem>
                     </Select>
 
                     {!isViewMode && (
@@ -199,4 +224,4 @@ const UserModal = ({
   );
 };
 
-export default UserModal;
+export default EmployeeModel;

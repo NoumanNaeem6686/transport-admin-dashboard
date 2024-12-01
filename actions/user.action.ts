@@ -90,14 +90,16 @@ export async function getAllUsers({
   query,
   page,
   limit,
+  type
 }: {
   query?: string;
   page?: number;
   limit?: number;
+  type?: string;
 }): Promise<Result<{ users: IUser[] }>> {
   try {
     const response = await axiosInstance.get("/api/users", {
-      params: { query, page, limit },
+      params: { query, page, limit, type },
     });
 
     return { data: response.data.body, meta: response.data.meta };
