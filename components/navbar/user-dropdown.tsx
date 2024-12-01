@@ -19,7 +19,7 @@ export const UserDropdown = () => {
 
   const getAvatarInitial = () => {
     if (session.data?.user) {
-      const { name, email, image } = session.data.user;
+      const { name, email, image, type } = session.data.user;
       return name
         ? name.charAt(0).toUpperCase()
         : email?.charAt(0).toUpperCase();
@@ -40,6 +40,9 @@ export const UserDropdown = () => {
     }
   }, [router]);
 
+  const profileHandler = () => {
+    router.push("/dashboard/profile")
+  }
   return (
     <Dropdown>
       <NavbarItem>
@@ -57,19 +60,10 @@ export const UserDropdown = () => {
         aria-label="User menu actions"
         onAction={(actionKey) => console.log({ actionKey })}
       >
-        <DropdownItem
-          key="profile"
-          className="flex flex-col justify-start light-font w-full items-start"
-        >
-          <p>
-            {session.data?.user ? session.data.user.name : ""}
-          </p>
-          <p>
-            {session.data?.user ? session.data.user.email : "User@example.com"}
-          </p>
-        </DropdownItem>
 
-        {/* <DropdownItem key="settings">My Settings</DropdownItem> */}
+        <DropdownItem key="settings"
+          onPress={profileHandler}
+        >My Profile</DropdownItem>
         <DropdownItem
           key="logout"
           color="danger"

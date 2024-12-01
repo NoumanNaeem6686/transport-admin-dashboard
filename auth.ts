@@ -11,6 +11,7 @@ declare module "next-auth" {
     type?: string;
     full_name?: string,
     profileImage?: string,
+    isAvailable?: string,
 
   }
 
@@ -21,6 +22,7 @@ declare module "next-auth" {
       phone_number?: string;
       type?: string;
       profileImage?: string;
+      isAvailable?: string;
     } & DefaultUser;
   }
 
@@ -72,6 +74,7 @@ const authOptions: AuthOptions = {
               name: user.body.user.full_name,
               profileImage: user.body.user.profileImage,
               type: user.body.user.type,
+              isAvailable: user.body.user.isAvailable
             };
           } else {
             // console.log("check your credentials");
@@ -106,6 +109,7 @@ const authOptions: AuthOptions = {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
+        token.available = user.isAvailable;
         token.type = user.type;
         token.profile = user.profileImage;
       }
@@ -120,6 +124,7 @@ const authOptions: AuthOptions = {
           name: token.name as string,
           type: token.type as string,
           image: token.profile as string,
+          isAvailable: token.available as string,
         };
       }
       return session;

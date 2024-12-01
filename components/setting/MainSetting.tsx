@@ -6,22 +6,25 @@ import { useCheckAdmin } from '../hooks/useCheckingAdmin';
 import { Pencil } from 'lucide-react';
 import { signIn, useSession } from 'next-auth/react';
 import { toast } from 'sonner';
+import { Input, Button, Select, SelectItem, Avatar, Card, Spacer } from '@nextui-org/react';
 
 function MainSetting() {
     const { userData } = useCheckAdmin();
-    const [name, setName] = useState(userData?.user?.name || '');
-    const [newPassword, setNewPassword] = useState('');
-    const { update } = useSession()
+    const [name, setName] = useState<string>(userData?.user?.name || '');
+    const [newPassword, setNewPassword] = useState<string>('');
+    const { update } = useSession();
     const session = useSession();
+    const { isAdmin } = useCheckAdmin();
 
-    const [confirmNewPassword, setConfirmNewPassword] = useState('');
-    const [profileImage, setProfileImage] = useState(userData?.user?.image);
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false)
+    const [confirmNewPassword, setConfirmNewPassword] = useState<string>('');
+    const [profileImage, setProfileImage] = useState<string>(userData?.user?.image || '');
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [availability, setAvailability] = useState<string>(userData?.user?.isAvailable ? "true" : "false");
+    const [error, setError] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const handleImageChange = (e: any) => {
-        const file = e.target.files[0];
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
         if (file) {
             setSelectedImage(file);
             const imageUrl = URL.createObjectURL(file);
@@ -63,13 +66,12 @@ function MainSetting() {
                     name,
                     newPassword,
                     profileImage: imageUrl,
+                    isAvailable: availability === "true",
                 }
             );
-            console.log("🚀 ~ handleSaveChanges ~ response:", response.data)
-
             setProfileImage(imageUrl);
             setError('');
-            toast.success("User Update Successfully")
+            toast.success("User Updated Successfully");
 
             update({
                 user: {
@@ -78,7 +80,7 @@ function MainSetting() {
                     name: response.data.user.full_name,
                     image: response.data.user.profileImage,
                 }
-            })
+            });
         } catch (error) {
             console.error("Error updating profile:", error);
             setError("Failed to update profile. Please try again.");
@@ -87,10 +89,11 @@ function MainSetting() {
         }
     };
 
-
     return (
-        <div className="flex flex-col items-center p-6 w-11/12 md:w-[36rem] dark:bg-neutral-900 rounded-2xl bg-slate-50 mx-auto mt-20">
-            <div className='flex items-start justify-start w-full'>
+
+        <div className="p-6 bg-white">
+
+            <div className='flex gap-3'>
                 <div className="relative w-20 h-20">
                     <label htmlFor="modalProfileImageInput" className="h-20 w-20 rounded-full cursor-pointer relative">
                         <Pencil className="p-1 rounded-full bg-[#222222b9] text-white dark:bg-neutral-800 dark:text-gray-500 absolute h-5 w-5 right-1 bottom-1" />
@@ -108,66 +111,72 @@ function MainSetting() {
                         />
                     </label>
                 </div>
-            </div>
-            <div className='flex flex-col lg:flex-row items-end gap-x-4 w-full'>
-                <div className="mt-6 w-full">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Name</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="w-full px-4 py-2 border dark:border-gray-600 rounded-lg focus:outline-none focus:ring"
-                    />
-                </div>
-                <div className="mt-4 w-full">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Email
-                        <span className='text-xs ml-2'>(You Cannot Change Email)</span>
-                    </label>
-                    <input
-                        type="email"
-                        // @ts-ignore
-                        value={userData?.user?.email}
-                        disabled
-                        className="w-full px-4 py-2 border dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-[#2222] dark:text-gray-500 text-gray-600 cursor-not-allowed"
-                    />
-                </div>
-            </div>
-            <div className='flex flex-col lg:flex-row items-end gap-x-4 w-full'>
+                <div className='flex flex-col items-start'>
 
-                <div className="mt-4 w-full">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">New Password</label>
-                    <input
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        className="w-full px-4 py-2 border dark:border-gray-600 rounded-lg focus:outline-none focus:ring"
-                    />
-                </div>
-                <div className="mt-4 w-full">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Confirm New Password</label>
-                    <input
-                        type="password"
-                        value={confirmNewPassword}
-                        onChange={(e) => setConfirmNewPassword(e.target.value)}
-                        className="w-full px-4 py-2 border dark:border-gray-600 rounded-lg focus:outline-none focus:ring"
-                    />
+                    <h2 className='font-semibold text-4xl capitalize'>
+                        {name}
+                    </h2>
+                    <p>
+                        {userData?.user?.email}
+                    </p>
                 </div>
             </div>
-            {error && <p className="text-red-500 my-4 w-full text-start">{error}</p>}
 
-            <div className='flex items-center justify-end w-full'>
-                <button
-                    type="button"
-                    onClick={handleSaveChanges}
-                    className="mt-6 px-4 py-2 text-white rounded-lg bg-[#05549F] focus:outline-none focus:ring-2"
+            <div className='flex flex-col md:flex-row items-center mt-4 gap-x-4'>
+
+                <Input
+                    label="Name"
+                    value={name || ''}
+                    onChange={(e) => setName(e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="Email (You Cannot Change your Email)"
+                    value={userData?.user?.email || ''}
+                    disabled
+                    fullWidth
+                />
+                <Select
+                    label="Availability"
+                    selectedKeys={new Set([availability])}
+                    onSelectionChange={(keys) => {
+                        const selectedValue = Array.from(keys).pop() as string;
+                        setAvailability(selectedValue);
+                    }}
+                    fullWidth
                 >
-                    {
-                        loading ? "Updating...." : "Save Changes"
-                    }
+                    <SelectItem key="true">Available</SelectItem>
+                    <SelectItem key="false">Busy</SelectItem>
+                </Select>
 
-                </button>
             </div>
+            <div className='flex flex-col md:flex-row items-center mt-4 mb-9 gap-x-4'>
+
+                <Input
+                    label="New Password"
+                    value={newPassword || ''}
+                    onChange={(e: any) => setNewPassword(e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="Confirm New Password"
+                    value={confirmNewPassword || ''}
+                    onChange={(e: any) => setConfirmNewPassword(e.target.value)}
+                    fullWidth
+                />
+            </div>
+
+            {error && <p className="text-red-500">{error}</p>}
+
+            <Button
+                onClick={handleSaveChanges}
+                disabled={loading}
+                color="primary"
+            >
+                {loading ? "Updating..." : "Save Changes"}
+            </Button>
         </div>
+
     );
 }
 
