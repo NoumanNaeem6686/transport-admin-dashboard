@@ -1,9 +1,15 @@
-import { Chip } from "@nextui-org/react";
+import { Tooltip, Chip } from "@nextui-org/react";
 import React from "react";
 import { DeleteIcon } from "../icons/table/delete-icon";
+import { EditIcon } from "../icons/table/edit-icon";
 import { EyeIcon } from "../icons/table/eye-icon";
-import { deleteUser } from "@/actions/user.action";
+import { IUser } from "@/helpers/types";
+import Link from "next/link";
+import UserModal from "./work-modal";
+import { deleteUser, editUser } from "@/actions/user.action";
 import { toast } from "sonner";
+import { History } from "lucide-react";
+import { deleteWorkWithUsEntry } from "@/actions/work.action";
 
 interface Props {
   item: any;
@@ -13,21 +19,21 @@ interface Props {
 }
 
 export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
+  console.log("🚀 ~ RenderCell ~ item:", item)
   const cellValue = item[columnKey as keyof any];
-  console.log("🚀 ~ RenderCell ~ cellValue:", cellValue)
 
   const handleDeleteUser = async () => {
     toast.promise(
-      deleteUser(item._id).then((result) => {
+      deleteWorkWithUsEntry(item._id).then((result) => {
         if (result.error) {
           throw new Error(result.error); // Manually throw an error if one is present
         }
         return result; // Return the result if no error
       }),
       {
-        loading: "Deleting admin...",
-        success: "Admin deleted successfully!",
-        error: "Error deleting admin.",
+        loading: "Deleting...",
+        success: "deleted successfully!",
+        error: "Error deleting.",
       }
     );
   };
@@ -48,66 +54,65 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
           size="sm"
           variant="flat"
           color={
-            cellValue === true
+            cellValue === "yes"
               ? "success"
 
               : "warning"
           }
         >
-          <span className="text-xs">{cellValue == true ? "YES" : "NO"}</span>
+          <span className="text-xs">{cellValue}</span>
         </Chip>
       );
     case "services":
       return (
+        <div className="flex gap-1">
+          {
 
-        <>
-          <Chip
-            size="sm"
-            variant="flat"
-            color={
-              cellValue === true
-                ? "success"
+            item.services.map((item: any, index: number) => (
+              <>
+                <Chip
+                  key={index}
+                  size="sm"
+                  variant="flat"
+                  color={
+                    item == "Cleaning"
+                      ? "success"
+                      : item == "Transport" ? "primary"
 
-                : "warning"
-            }
-          >
-            <span className="text-xs">{cellValue}</span>
-          </Chip>
+                        : "warning"
+                  }
+                >
+                  <span className="text-xs">{item}</span>
+                </Chip >
 
-        </>
+              </>
+
+            ))
+          }
+        </div >
       );
 
     case "actions":
       return (
-        <>
-        </>
-        // <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4">
 
-        //   <div>
-        //     <Tooltip content="Details">
-        //       <UserModal
-        //         button={<EyeIcon size={20} fill="#979797" />}
-        //         mode="View"
-        //         data={item}
-        //       />
-        //     </Tooltip>
-        //   </div>
 
-        //   <>
 
-        //     <div>
-        //       <Tooltip content="Delete user" color="danger">
-        //         <UserModal
-        //           button={<DeleteIcon size={20} fill="#FF0080" />}
-        //           mode="Delete"
-        //           data={item}
-        //           onConfirm={handleDeleteUser}
-        //         />
-        //       </Tooltip>
-        //     </div>
+          <>
 
-        //   </>
-        // </div>
+            <div>
+              <Tooltip content="Delete user" color="danger">
+                <UserModal
+                  button={<DeleteIcon size={20} fill="#FF0080" />}
+                  mode="Delete"
+                  data={item}
+                  onConfirm={handleDeleteUser}
+                />
+              </Tooltip>
+            </div>
+
+          </>
+        </div>
       );
 
     default:

@@ -1,4 +1,6 @@
+"use server"
 import axiosInstance from "@/config/axios";
+
 
 
 export async function getAllWorkWithUsEntries({
@@ -14,7 +16,6 @@ export async function getAllWorkWithUsEntries({
         const response = await axiosInstance.get("/api/work-with-us", {
             params: { query, page, limit },
         });
-        console.log("🚀 ~ response:", response.data)
 
         return { data: response.data.entries, meta: response.data.meta };
     } catch (error: any) {
@@ -24,15 +25,20 @@ export async function getAllWorkWithUsEntries({
         return { error: errorMessage };
     }
 }
-export async function deleteWorkWithUsEntry(entryId: any) {
+
+export async function deleteWorkWithUsEntry(
+    entryId: any
+) {
+    console.log("🚀 ~ entryId:", entryId)
     try {
-        const response = await axiosInstance.delete(`/api/work-with-us/${entryId}`);
-        console.log("Deleted entry:", response.data.entry);
-        return { data: response.data.entry };
+        await axiosInstance.delete(`/api/work-with-us/${entryId}`);
+
+        return { data: { message: "Entry deleted successfully" } };
     } catch (error: any) {
-        const errorMessage = error.response?.data?.error || "Failed to delete entry";
-        console.log("Delete entry failed:", errorMessage);
+        console.log("🚀 ~ error:", error)
+        // Extract detailed error message if available
+        const errorMessage = error.response?.data?.error || "Delete entry failed";
+        // console.error("Delete user failed:", errorMessage);
         return { error: errorMessage };
     }
 }
-
