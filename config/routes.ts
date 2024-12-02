@@ -17,6 +17,7 @@ import {
   Banknote,
   History,
   BriefcaseBusiness,
+  Handshake,
 } from "lucide-react";
 
 export const routes = [
@@ -55,6 +56,12 @@ export const routes = [
     title: "Work With Us",
     icon: BriefcaseBusiness,
     href: "/dashboard/work",
+    admin: true,
+  },
+  {
+    title: "Partners",
+    icon: Handshake,
+    href: "/dashboard/partner",
     admin: true,
   },
 ];
