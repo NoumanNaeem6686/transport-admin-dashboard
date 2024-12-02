@@ -1,23 +1,13 @@
 // routes.ts (or routes.tsx)
 import { ProductsIcon } from "@/components/icons/sidebar/products-icon";
 import {
-  LayoutDashboard,
-  UserRoundCog,
-  Columns4,
-  CalendarSearch,
-  ChartSpline,
-  PackageSearch,
   User,
-  ShoppingCart,
   Home,
   LayoutGrid,
   Users,
-  CreditCard,
-  Settings,
-  Banknote,
-  History,
   BriefcaseBusiness,
   Handshake,
+  Aperture,
 } from "lucide-react";
 
 export const routes = [
@@ -53,9 +43,9 @@ export const routes = [
     admin: false,
   },
   {
-    title: "Work With Us",
-    icon: BriefcaseBusiness,
-    href: "/dashboard/work",
+    title: "Offers",
+    icon: Aperture,
+    href: "/dashboard/offers",
     admin: true,
   },
   {
@@ -64,4 +54,12 @@ export const routes = [
     href: "/dashboard/partner",
     admin: true,
   },
+  {
+    title: "Work With Us",
+    icon: BriefcaseBusiness,
+    href: "/dashboard/work",
+    admin: true,
+  },
+
+
 ];
