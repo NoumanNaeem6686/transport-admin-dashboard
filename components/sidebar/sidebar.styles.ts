@@ -35,7 +35,7 @@ export const Header = tv({
 });
 
 export const Body = tv({
-  base: "flex flex-col mt-10 gap-3 px-2 ",
+  base: "flex flex-col mt-10 gap-1.5 px-1 ",
 });
 
 export const Footer = tv({

@@ -23,6 +23,8 @@ export const routes = [
     title: "Home",
     icon: Home,
     href: "/dashboard",
+    admin: true,
+
   },
   {
     title: "Admins",
@@ -37,13 +39,13 @@ export const routes = [
     admin: true,
   },
   {
-    title: "Daily Tasks",
+    title: "Tasks Management",
     icon: LayoutGrid,
     href: "/dashboard/task",
     admin: true,
   },
   {
-    title: "Daily Tasks",
+    title: "My Tasks",
     icon: LayoutGrid,
     href: "/dashboard/my-task",
     admin: false,

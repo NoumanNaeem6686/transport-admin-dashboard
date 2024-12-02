@@ -66,7 +66,7 @@ function MainSetting() {
                     name,
                     newPassword,
                     profileImage: imageUrl,
-                    isAvailable: availability === "true",
+                    isAvailable: availability,
                 }
             );
             setProfileImage(imageUrl);
@@ -79,6 +79,7 @@ function MainSetting() {
                     ...session.user,
                     name: response.data.user.full_name,
                     image: response.data.user.profileImage,
+                    isAvailable: availability === "true"
                 }
             });
         } catch (error) {

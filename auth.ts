@@ -103,6 +103,7 @@ const authOptions: AuthOptions = {
       if (trigger === "update" && session?.user) {
         token.name = session.user.name;
         token.profile = session.user.image;
+        token.available = session.user.isAvailable;
       }
       if (user) {
         console.log("🚀 ~ jwt ~ user:", user);

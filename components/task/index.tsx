@@ -11,6 +11,7 @@ import { EyeIcon } from '../icons/table/eye-icon';
 import { useCheckAdmin } from '../hooks/useCheckingAdmin';
 import { Download } from 'lucide-react';
 import saveAs from 'file-saver';
+import Image from 'next/image';
 type TaskPriority = "medium" | "high" | "low" | "critical";
 type TaskStatus = "assigned" | "in_progress" | "completed" | "on_hold" | "cancelled" | "review" | "approved";
 interface Task {
@@ -28,6 +29,8 @@ interface Props {
 }
 
 function Task({ UsersData, data }: Props) {
+    console.log("🚀 ~ Task ~ data:", data)
+    console.log("🚀 ~ Task ~ UsersData:", UsersData)
     const [allTasks, setAllTasks] = useState<Task[]>(data);
     const { isAdmin } = useCheckAdmin()
     const colors = [
@@ -149,76 +152,89 @@ function Task({ UsersData, data }: Props) {
                     </div>
                 }
             </div>
-            <div className=" gap-4 my-8 flex items-start flex-wrap">
-                {allTasks && allTasks.slice().reverse().map((task: Task) => (
-                    <div key={task._id} className={`p-4 bg-white cursor-pointer min-w-[18rem] max-w-[18rem] dark:bg-[#18181b] rounded-xl border-1 ${borderColorClasses[task.priority]} flex flex-col gap-4`}>
-                        <div className="flex justify-between items-center border-b pb-2">
-                            {/* <Chip variant="flat" color={priorityColors[task.priority]} className="capitalize">
+            {data.length == 0 ?
+                < div className='h-[60vh] flex items-center justify-center flex-col gap-3 text-xl font-semibold '>
+                    <Image
+                        src="/undraw_no_data_re_kwbl.svg"
+                        alt='No task FOund'
+                        height={100}
+                        width={100}
+                    />
+                    No Task Found
+                </div>
+                :
+                <div className=" gap-4 my-8 flex items-start flex-wrap">
+                    {allTasks && allTasks.slice().reverse().map((task: Task) => (
+                        <div key={task._id} className={`p-4 bg-white cursor-pointer min-w-[18rem] max-w-[18rem] dark:bg-[#18181b] rounded-xl border-1 ${borderColorClasses[task.priority]} flex flex-col gap-4`}>
+                            <div className="flex justify-between items-center border-b pb-2">
+                                {/* <Chip variant="flat" color={priorityColors[task.priority]} className="capitalize">
                                 {task.priority}
                             </Chip> */}
-                            <div className="flex justify-between items-center">
-                                {/* @ts-ignore */}
-                                <Chip variant="flat" color={statusColors[task.status]} className="capitalize">
-                                    {formatStatus(task.status)}
-                                </Chip>
-                            </div>
-                            <div className='flex items-center gap-2'>
+                                <div className="flex justify-between items-center">
+                                    {/* @ts-ignore */}
+                                    <Chip variant="flat" color={statusColors[task.status]} className="capitalize">
+                                        {formatStatus(task.status)}
+                                    </Chip>
+                                </div>
+                                <div className='flex items-center gap-2'>
 
-                                <TaskModal
-                                    button={<EyeIcon size={20} fill="#979797" />}
-                                    mode="View" data={task}
-                                />
-                                <TaskModal
-                                    button={<EditIcon size={20} fill="#1a740e" />}
-                                    mode="Edit" onConfirm={handleEditUser} usersData={UsersData} data={task}
-                                />
-                                {
-                                    isAdmin &&
-                                    <button onClick={() => handleDeleteTask(task._id)}>
-                                        <DeleteIcon size={20} fill="#FF0080" />
-                                    </button>
-                                }
-                            </div>
-                        </div>
-
-                        <h5 className="text-lg font-semibold capitalize text-gray-800 dark:text-gray-100">
-                            {task.title}
-                        </h5>
-                        <div className="flex gap-x-1 -mt-2 relative ml-5">
-                            {task.userIds.map((user: any, index: number) => (
-                                <Tooltip key={user._id} content={user.full_name} className="cursor-pointer">
-                                    <Avatar
-                                        name={user.full_name.toUpperCase()}
-                                        size="sm"
-                                        className={`text-white ${colors[index % colors.length]} avatar-stacked`}
-                                        style={{ zIndex: task.userIds.length + index }}
+                                    <TaskModal
+                                        button={<EyeIcon size={20} fill="#979797" />}
+                                        mode="View" data={task}
                                     />
-                                </Tooltip>
-                            ))}
-                        </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
-                            {task.task}
-                        </p>
-                        {
-                            task.fileUrl.length > 0 &&
-                            <div className="flex items-center justify-end w-full">
-                                <div onClick={() => downloadFile(task.fileUrl)} className="capitalize  flex items-center hover:text-blue-500 hover:underline gap-x-1" style={{ cursor: 'pointer' }}>
-                                    <Download /> {task.fileUrl[0].name}
+                                    <TaskModal
+                                        button={<EditIcon size={20} fill="#1a740e" />}
+                                        mode="Edit" onConfirm={handleEditUser} usersData={UsersData} data={task}
+                                    />
+                                    {
+                                        isAdmin &&
+                                        <button onClick={() => handleDeleteTask(task._id)}>
+                                            <DeleteIcon size={20} fill="#FF0080" />
+                                        </button>
+                                    }
                                 </div>
                             </div>
 
-                        }
+                            <h5 className="text-lg font-semibold capitalize text-gray-800 dark:text-gray-100">
+                                {task.title}
+                            </h5>
+                            <div className="flex gap-x-1 -mt-2 relative ml-5">
+                                {task.userIds.map((user: any, index: number) => (
+                                    <Tooltip key={user._id} content={user.full_name} className="cursor-pointer">
+                                        <Avatar
+                                            // name={user.full_name.toUpperCase()}
+                                            src={user.profile}
+                                            size="sm"
+                                            className={`text-white ${colors[index % colors.length]} avatar-stacked`}
+                                            style={{ zIndex: task.userIds.length + index }}
+                                        />
+                                    </Tooltip>
+                                ))}
+                            </div>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
+                                {task.task}
+                            </p>
+                            {
+                                task.fileUrl.length > 0 &&
+                                <div className="flex items-center justify-end w-full">
+                                    <div onClick={() => downloadFile(task.fileUrl)} className="capitalize  flex items-center hover:text-blue-500 hover:underline gap-x-1" style={{ cursor: 'pointer' }}>
+                                        <Download /> {task.fileUrl[0].name}
+                                    </div>
+                                </div>
+
+                            }
 
 
 
-                        {/* <div className="flex justify-between items-center mt-4">
+                            {/* <div className="flex justify-between items-center mt-4">
                         <Chip variant="flat" color={statusColors[task.status]} className="capitalize">
                             {formatStatus(task.status)}
                         </Chip>
                     </div> */}
-                    </div>
-                ))}
-            </div>
+                        </div>
+                    ))}
+                </div>
+            }
 
 
         </div >

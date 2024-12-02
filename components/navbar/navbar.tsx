@@ -41,7 +41,7 @@ export const NavbarWrapper = ({ children }: Props) => {
           justify="end"
           className="w-fit ml-auto data-[justify=end]:flex-grow-0"
         >
-          <NotificationsDropdown />
+          {/* <NotificationsDropdown /> */}
 
           <NavbarContent>
             <UserDropdown />

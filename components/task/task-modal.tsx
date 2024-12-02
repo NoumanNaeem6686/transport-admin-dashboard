@@ -28,6 +28,8 @@ interface TaskData {
     userIds: string[];
     assignedBy: string;
     dueDate: string;
+    startDate: string;
+    startTime: string;
     priority: string;
     fileUrl: any;
     title: string;
@@ -60,6 +62,8 @@ const TaskModal = ({
         userIds: [],
         assignedBy: "",
         dueDate: "",
+        startTime: "",
+        startDate: "",
         title: "",
         fileUrl: {},
         priority: "low",
@@ -124,6 +128,8 @@ const TaskModal = ({
                 userIds: [],
                 assignedBy: "",
                 dueDate: "",
+                startDate: "",
+                startTime: "",
                 fileUrl: {},
                 title: "",
                 priority: "low",
@@ -149,33 +155,33 @@ const TaskModal = ({
     };
 
     const handleFileUpload = async (file: any) => {
-        const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', "csv"];
-        const fileExtension = file.name.split('.').pop().toLowerCase();
-        if (allowedExtensions.includes(fileExtension)) {
-            setLoading(true)
-            const formData = new FormData();
-            formData.append('file', file);
+        // const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', "csv"];
+        // const fileExtension = file.name.split('.').pop().toLowerCase();
+        // if (allowedExtensions.includes(fileExtension)) {
+        setLoading(true)
+        const formData = new FormData();
+        formData.append('file', file);
 
-            try {
-                const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/file/upload`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-                setTaskData(prevState => ({
-                    ...prevState,
-                    fileUrl: response.data.url
-                }));
-            } catch (error) {
-                console.error('Error uploading file:', error);
+        try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/file/upload`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            setTaskData(prevState => ({
+                ...prevState,
+                fileUrl: response.data.url
+            }));
+        } catch (error) {
+            console.error('Error uploading file:', error);
 
-            } finally {
-                setLoading(false)
-            }
+        } finally {
+            setLoading(false)
         }
-        else {
-            toast.success("Invalid File only PDF, DOC and Excel is acceptable")
-        }
+        // }
+        // else {
+        //     toast.success("Invalid File only PDF, DOC and Excel is acceptable")
+        // }
     };
 
     const statusColors = {
@@ -216,13 +222,10 @@ const TaskModal = ({
                                 onChange={handleChange}
                                 variant="bordered"
                             >
-                                <SelectItem key="assigned">Assigned</SelectItem>
+                                <SelectItem key="started">Started</SelectItem>
                                 <SelectItem key="in_progress">In Progress</SelectItem>
                                 <SelectItem key="completed">Completed</SelectItem>
                                 <SelectItem key="on_hold">On Hold</SelectItem>
-                                <SelectItem key="cancelled">Cancelled</SelectItem>
-                                <SelectItem key="review">Review</SelectItem>
-                                <SelectItem key="approved">Approved</SelectItem>
                             </Select>
                         ) :
                             isViewMode ?
@@ -249,8 +252,9 @@ const TaskModal = ({
                                         {data.userIds.map((user: any, index: number) => (
                                             <Tooltip key={user._id} content={user.full_name} className="cursor-pointer">
                                                 <Avatar
-                                                    name={user.full_name.toUpperCase()}
                                                     size="sm"
+                                                    src={user.profile}
+                                                    // name={user.full_name.toUpperCase()}
                                                     className={`text-white ${colors[index % colors.length]} avatar-stacked`}
                                                     style={{ zIndex: data.userIds.length + index }}
                                                 />
@@ -273,6 +277,15 @@ const TaskModal = ({
                                     }
                                     <div className="flex items-center justify-between mt-6 text-sm font-light">
                                         <p>
+                                            Start Date {new Date(data.startDate).toLocaleDateString("en-US", { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                                        </p>
+                                        <p>
+                                            Start Time {data.startTime}
+                                        </p>
+
+                                    </div>
+                                    <div className="flex items-center justify-between mt-1 text-sm font-light">
+                                        <p>
                                             Assigned By {data.assignedBy?.full_name}
                                         </p>
                                         <p>
@@ -293,6 +306,25 @@ const TaskModal = ({
                                             variant="bordered"
                                             disabled={isViewMode}
 
+                                        />
+
+                                        <Input
+                                            name="startDate"
+                                            label="Start Date"
+                                            type="date"
+                                            value={taskData.startDate}
+                                            onChange={handleChange}
+                                            variant="bordered"
+                                            disabled={isViewMode}
+                                        />
+                                        <Input
+                                            name="startTime"
+                                            label="Start Time"
+                                            type="time"
+                                            value={taskData.startTime}
+                                            onChange={handleChange}
+                                            variant="bordered"
+                                            disabled={isViewMode}
                                         />
                                         <Input
                                             name="dueDate"

@@ -6,12 +6,18 @@ export default async function middleware(
   event: NextFetchEvent
 ) {
   const session = await getToken({ req: req as any });
+  console.log("🚀 ~ session:", session)
   const isAuthenticated = !!session;
 
   const url = req.nextUrl.clone();
 
   if (req.nextUrl.pathname.startsWith("/login") && isAuthenticated) {
-    url.pathname = "/dashboard"
+    if (session.type == "admin") {
+      url.pathname = "/dashboard"
+    } else {
+      url.pathname = "/dashboard/my-task"
+
+    }
     return NextResponse.redirect(url);
   }
 
