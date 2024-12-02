@@ -4,11 +4,9 @@ import { DeleteIcon } from "../icons/table/delete-icon";
 import { EditIcon } from "../icons/table/edit-icon";
 import { EyeIcon } from "../icons/table/eye-icon";
 import { IUser } from "@/helpers/types";
-import Link from "next/link";
 import UserModal from "./user-modal";
 import { deleteUser, editUser } from "@/actions/user.action";
 import { toast } from "sonner";
-import { History } from "lucide-react";
 
 interface Props {
   item: any;

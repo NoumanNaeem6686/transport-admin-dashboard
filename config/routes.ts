@@ -16,6 +16,7 @@ import {
   Settings,
   Banknote,
   History,
+  BriefcaseBusiness,
 } from "lucide-react";
 
 export const routes = [
@@ -50,13 +51,10 @@ export const routes = [
     href: "/dashboard/my-task",
     admin: false,
   },
-
-
-  // {
-  //   title: "Settings",
-  //   icon: Settings,
-  //   href: "/dashboard/setting",
-  // },
-
-
+  {
+    title: "Work With Us",
+    icon: BriefcaseBusiness,
+    href: "/dashboard/work",
+    admin: true,
+  },
 ];

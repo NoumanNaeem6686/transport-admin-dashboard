@@ -141,7 +141,7 @@ function Task({ UsersData, data }: Props) {
                 <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
                     <h3 className="text-xl regular-fontss font-semibold">
                         {
-                            isAdmin ? "Task Management" : "My Task"
+                            isAdmin ? "Employees Task" : "My Task"
                         }
                     </h3>
                 </div>
@@ -165,7 +165,7 @@ function Task({ UsersData, data }: Props) {
                 :
                 <div className=" gap-4 my-8 flex items-start flex-wrap">
                     {allTasks && allTasks.slice().reverse().map((task: Task) => (
-                        <div key={task._id} className={`p-4 bg-white cursor-pointer min-w-[18rem] max-w-[18rem] dark:bg-[#18181b] rounded-xl border-1 ${borderColorClasses[task.priority]} flex flex-col gap-4`}>
+                        <div key={task._id} className={`p-4 bg-white min-w-[18rem] max-w-[18rem] dark:bg-[#18181b] rounded-xl border-1 ${borderColorClasses[task.priority]} flex flex-col gap-4`}>
                             <div className="flex justify-between items-center border-b pb-2">
                                 {/* <Chip variant="flat" color={priorityColors[task.priority]} className="capitalize">
                                 {task.priority}
