@@ -8,6 +8,7 @@ import {
   BriefcaseBusiness,
   Handshake,
   Aperture,
+  NotebookPen,
 } from "lucide-react";
 
 export const routes = [
@@ -43,11 +44,18 @@ export const routes = [
     admin: false,
   },
   {
+    title: "Bookings",
+    icon: NotebookPen,
+    href: "/dashboard/bookings",
+    admin: true,
+  },
+  {
     title: "Offers",
     icon: Aperture,
     href: "/dashboard/offers",
     admin: true,
   },
+
   {
     title: "Partners",
     icon: Handshake,
