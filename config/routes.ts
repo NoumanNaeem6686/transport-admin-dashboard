@@ -43,12 +43,12 @@ export const routes = [
     href: "/dashboard/my-task",
     admin: false,
   },
-  {
-    title: "Bookings",
-    icon: NotebookPen,
-    href: "/dashboard/bookings",
-    admin: true,
-  },
+  // {
+  //   title: "Bookings",
+  //   icon: NotebookPen,
+  //   href: "/dashboard/bookings",
+  //   admin: true,
+  // },
   {
     title: "Offers",
     icon: Aperture,

@@ -12,6 +12,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import clsx from "clsx";
 import Link from "next/link";
+import { CollapseItems } from "./collapse-items";
 
 export const SidebarWrapper = () => {
   const pathname = usePathname();
@@ -51,7 +52,19 @@ export const SidebarWrapper = () => {
               </div>
               <div className="flex flex-col justify-between h-full">
                 <div className={Sidebar.Body()} >
-                  {routes
+                  {routes.slice(0, 4)
+                    .filter((route) => route.admin === undefined || route.admin === isAdmin)
+                    .map((route) => (
+                      <SidebarItem
+                        key={route.href}
+                        title={route.title}
+                        icon={<route.icon />}
+                        isActive={pathname === route.href}
+                        href={route.href}
+                      />
+                    ))}
+                  <CollapseItems />
+                  {routes.slice(4)
                     .filter((route) => route.admin === undefined || route.admin === isAdmin)
                     .map((route) => (
                       <SidebarItem

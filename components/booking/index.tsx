@@ -3,6 +3,8 @@ import React from "react";
 import { TableWrapper } from "@/components/table/table";
 import { useCheckAdmin } from "../hooks/useCheckingAdmin";
 import { RenderCell } from "./render-cell";
+import { Button } from "@nextui-org/react";
+import Link from "next/link";
 
 export const Booking = ({ data, meta }: { data: any; meta: any; }) => {
   const { isAdmin } = useCheckAdmin()
@@ -21,8 +23,13 @@ export const Booking = ({ data, meta }: { data: any; meta: any; }) => {
   return (
     <div className=" px-4 my-10 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
       <div className="flex justify-between flex-wrap gap-4 items-center">
-        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
+        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap justify-between w-full">
           <h3 className="text-xl regular-fontss font-semibold">Bookings Info</h3>
+          <Link href={"/dashboard/bookings/create"}>
+            <Button color="primary">
+              Add New Booking
+            </Button>
+          </Link>
         </div>
 
       </div>
