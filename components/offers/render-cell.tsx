@@ -6,6 +6,7 @@ import UserModal from "./offer-modal";
 import { toast } from "sonner";
 import { deletePartner } from "@/actions/partner.action";
 import { deleteOffer } from "@/actions/offer.action";
+import { SquarePlus } from "lucide-react";
 
 interface Props {
   item: any;
@@ -17,6 +18,30 @@ interface Props {
 export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
   console.log("🚀 ~ RenderCell ~ item:", item)
   const cellValue = item[columnKey as keyof any];
+
+
+  // const calculateTotal = () => {
+  //   let total = 0;
+  //   selectedServices.forEach((service) => {
+  //     if (service.id === 'transport') {
+  //       total += (service.distance || 0) * pricing.transport.ratePerKm;
+
+  //     }
+  //     if (service.id === 'helper') {
+  //       total += (service.helpers || 0) * (service.hours || 0) * pricing.helper.ratePerHelperPerHour;
+  //     }
+  //     if (service.id === 'cleaning') {
+  //       total += (service.area || 0) * pricing.cleaning.ratePerSqFt;
+  //       if (service.cleaners) {
+  //         total += (service.cleaners || 0) * pricing.cleaning.ratePerCleaner;
+  //       }
+  //     }
+  //   });
+  //   if (isWorking) {
+  //     total = total * 0.5; // Apply 50% discount
+  //   }
+  //   setTotalCost(total);
+  // };
 
   const handleDeleteUser = async () => {
     toast.promise(
@@ -80,6 +105,15 @@ export const RenderCell = ({ item, columnKey, isAdmin }: Props) => {
 
 
           <>
+            <div>
+              <Tooltip content="Details">
+                <UserModal
+                  button={<SquarePlus size={20} className="text-green-700" />}
+                  mode="upgrade"
+                  data={item}
+                />
+              </Tooltip>
+            </div>
             <div>
               <Tooltip content="Details">
                 <UserModal

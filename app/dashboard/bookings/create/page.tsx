@@ -59,7 +59,6 @@ const BookingPage: React.FC = () => {
     const [currentService, setCurrentService] = useState<Service | null>(null);
     const [formData, setFormData] = useState<FormData>({});
     const [totalCost, setTotalCost] = useState(0);
-    const [time, setTime] = useState<any>()
     const [isWorking, setIsWorking] = useState(false);
 
     const [userInfo, setUserInfo] = useState({
