@@ -208,9 +208,9 @@ const BookingPage: React.FC = () => {
     };
 
     return (
-        <div className="mt-20 min-h-screen flex flex-col p-4 gap-4">
+        <div className="min-h-screen flex flex-col p-4 gap-4">
 
-            <div className="   text-sm text-gray-50 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4 w-full md:pl-10">
+            <div className="   text-sm text-gray-50 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4 w-full md:pl-16">
                 {services.map((service, index) => (
                     <div className="w-full md:-ml-10" key={index}>
                         <ServicesCard service={service} handleOpenForm={handleOpenForm} pricing={pricing} />

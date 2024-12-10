@@ -63,7 +63,10 @@ export const SidebarWrapper = () => {
                         href={route.href}
                       />
                     ))}
-                  <CollapseItems />
+                  {
+                    isAdmin &&
+                    <CollapseItems />
+                  }
                   {routes.slice(4)
                     .filter((route) => route.admin === undefined || route.admin === isAdmin)
                     .map((route) => (
